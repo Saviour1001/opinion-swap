@@ -148,6 +148,10 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         validateReceiver(_receiver)
         returns (bytes32 messageId)
     {
+        
+        // Send the token from user to this contract
+        IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
+
         // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
         // address(linkToken) means fees are paid in LINK
         Client.EVM2AnyMessage memory evm2AnyMessage = _buildCCIPMessage(

@@ -1,9 +1,12 @@
-export const baseSepoliaScan = "0x1d748f5b76a62Cf3847E6c8716d6a9cDeb560A9E";
+export const opnionTradingBaseSepolia =
+  "0x1d748f5b76a62Cf3847E6c8716d6a9cDeb560A9E";
 
 export const ccipBridgeBaseSepolia =
   "0x4117010F268Cd055B242b435A23F111371720eF9";
 
-export const baseSepoliaoContractABI = [
+export const ccipBridgeOPSepolia = "0x039A8561E235cF960bfed66AAD74441E3594aBb4";
+
+export const opnionTradingBaseSepoliaABI = [
   {
     inputs: [
       {
@@ -641,6 +644,119 @@ export const baseSepoliaoContractABI = [
 
 export const ccipBridgeABI = [
   {
+    inputs: [],
+    name: "acceptOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "_destinationChainSelector",
+        type: "uint64",
+      },
+      {
+        internalType: "bool",
+        name: "allowed",
+        type: "bool",
+      },
+    ],
+    name: "allowlistDestinationChain",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_sender",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "allowed",
+        type: "bool",
+      },
+    ],
+    name: "allowlistSender",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "_sourceChainSelector",
+        type: "uint64",
+      },
+      {
+        internalType: "bool",
+        name: "allowed",
+        type: "bool",
+      },
+    ],
+    name: "allowlistSourceChain",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "messageId",
+            type: "bytes32",
+          },
+          {
+            internalType: "uint64",
+            name: "sourceChainSelector",
+            type: "uint64",
+          },
+          {
+            internalType: "bytes",
+            name: "sender",
+            type: "bytes",
+          },
+          {
+            internalType: "bytes",
+            name: "data",
+            type: "bytes",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "token",
+                type: "address",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct Client.EVMTokenAmount[]",
+            name: "destTokenAmounts",
+            type: "tuple[]",
+          },
+        ],
+        internalType: "struct Client.Any2EVMMessage",
+        name: "message",
+        type: "tuple",
+      },
+    ],
+    name: "ccipReceive",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -884,230 +1000,6 @@ export const ccipBridgeABI = [
     type: "event",
   },
   {
-    inputs: [],
-    name: "acceptOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint64",
-        name: "_destinationChainSelector",
-        type: "uint64",
-      },
-      {
-        internalType: "bool",
-        name: "allowed",
-        type: "bool",
-      },
-    ],
-    name: "allowlistDestinationChain",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_sender",
-        type: "address",
-      },
-      {
-        internalType: "bool",
-        name: "allowed",
-        type: "bool",
-      },
-    ],
-    name: "allowlistSender",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint64",
-        name: "_sourceChainSelector",
-        type: "uint64",
-      },
-      {
-        internalType: "bool",
-        name: "allowed",
-        type: "bool",
-      },
-    ],
-    name: "allowlistSourceChain",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint64",
-        name: "",
-        type: "uint64",
-      },
-    ],
-    name: "allowlistedDestinationChains",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "allowlistedSenders",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint64",
-        name: "",
-        type: "uint64",
-      },
-    ],
-    name: "allowlistedSourceChains",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "bytes32",
-            name: "messageId",
-            type: "bytes32",
-          },
-          {
-            internalType: "uint64",
-            name: "sourceChainSelector",
-            type: "uint64",
-          },
-          {
-            internalType: "bytes",
-            name: "sender",
-            type: "bytes",
-          },
-          {
-            internalType: "bytes",
-            name: "data",
-            type: "bytes",
-          },
-          {
-            components: [
-              {
-                internalType: "address",
-                name: "token",
-                type: "address",
-              },
-              {
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-              },
-            ],
-            internalType: "struct Client.EVMTokenAmount[]",
-            name: "destTokenAmounts",
-            type: "tuple[]",
-          },
-        ],
-        internalType: "struct Client.Any2EVMMessage",
-        name: "message",
-        type: "tuple",
-      },
-    ],
-    name: "ccipReceive",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getLastReceivedMessageDetails",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "messageId",
-        type: "bytes32",
-      },
-      {
-        internalType: "string",
-        name: "text",
-        type: "string",
-      },
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenAmount",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getRouter",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint64",
@@ -1188,25 +1080,6 @@ export const ccipBridgeABI = [
   {
     inputs: [
       {
-        internalType: "bytes4",
-        name: "interfaceId",
-        type: "bytes4",
-      },
-    ],
-    name: "supportsInterface",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "pure",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "address",
         name: "to",
         type: "address",
@@ -1251,5 +1124,135 @@ export const ccipBridgeABI = [
   {
     stateMutability: "payable",
     type: "receive",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "",
+        type: "uint64",
+      },
+    ],
+    name: "allowlistedDestinationChains",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "allowlistedSenders",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "",
+        type: "uint64",
+      },
+    ],
+    name: "allowlistedSourceChains",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getLastReceivedMessageDetails",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "messageId",
+        type: "bytes32",
+      },
+      {
+        internalType: "string",
+        name: "text",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenAmount",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getRouter",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes4",
+        name: "interfaceId",
+        type: "bytes4",
+      },
+    ],
+    name: "supportsInterface",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
   },
 ];
