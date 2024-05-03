@@ -144,7 +144,6 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         uint256 _amount
     )
         external
-        onlyOwner
         onlyAllowlistedDestinationChain(_destinationChainSelector)
         validateReceiver(_receiver)
         returns (bytes32 messageId)
@@ -310,12 +309,6 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
             any2EvmMessage.destTokenAmounts[0].token,
             any2EvmMessage.destTokenAmounts[0].amount
         );
-
-        IERC20(s_lastReceivedTokenAddress).safeTransfer(
-            s_lastReceivedTokenAddress,
-            s_lastReceivedTokenAmount
-        );
-        
     }
 
     /// @notice Construct a CCIP message.
