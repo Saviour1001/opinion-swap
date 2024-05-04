@@ -3,6 +3,13 @@
 Are you ready to dive into the exciting world of opinion trading? 🤔💡
 Imagine a place where your thoughts and predictions can earn you big rewards! 💰🔮 That's right, OpinionSwap is here to revolutionize the way we engage with the wisdom of the crowd!
 
+<p align="center">
+  <a href="https://github.com/saviour1001/">
+    <img alt="Opinion Swap" src="public/favicon.ico"  width="100" height="100"/>
+    <h3 align="center">Opinion Swap</h3>
+  </a>
+</p>
+
 With over 200k monthly active users on Farcaster, we've found the perfect distribution layer to bring OpinionSwap to the masses! 📈🚀 Whether you're a seasoned crypto enthusiast or just starting your journey, OpinionSwap makes it easy and fun to participate in the world of decentralized opinion trading.
 
 ### 🎯 How does it work?
