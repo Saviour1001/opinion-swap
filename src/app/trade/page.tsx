@@ -1,17 +1,25 @@
 import { Trade } from "@/components";
 import { networks } from "@/utils/constants";
-import { createPublicClient, getContract, http } from "viem";
-import { baseSepolia } from "viem/chains";
+import { Abi, createPublicClient, getContract, http } from "viem";
+import { baseSepolia, mantleSepoliaTestnet } from "viem/chains";
 
-const TradePage = async () => {
+const TradePage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  const chainId = Number(searchParams.chainId);
+
+  const network = networks.find((network) => network.id === chainId);
+
   const client = createPublicClient({
-    chain: baseSepolia,
+    chain: chainId === baseSepolia.id ? baseSepolia : mantleSepoliaTestnet,
     transport: http(),
   });
 
   const contract = getContract({
-    address: networks[0].contract as `0x${string}`,
-    abi: networks[0].abi,
+    address: network?.contract as `0x${string}`,
+    abi: network?.abi as Abi,
     client,
   });
 

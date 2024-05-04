@@ -1,5 +1,8 @@
+import { baseSepolia, mantleSepoliaTestnet } from "viem/chains";
+
 export const networks = [
   {
+    id: baseSepolia.id,
     chain: "Base Sepolia",
     contract: "0xC21A38478c3412e7253B79E6E1e9Cd3d15F5b73c",
     abi: [
@@ -639,6 +642,7 @@ export const networks = [
     ],
   },
   {
+    id: mantleSepoliaTestnet.id,
     chain: "Mantle Sepolia Testnet",
     contract: "0xA4CCEb9e84b9682ca559AA41DB57f4BECe586dc5",
     abi: [
