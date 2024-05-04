@@ -12,6 +12,14 @@ Imagine a place where your thoughts and predictions can earn you big rewards! �
 
 With over 200k monthly active users on Farcaster, we've found the perfect distribution layer to bring OpinionSwap to the masses! 📈🚀 Whether you're a seasoned crypto enthusiast or just starting your journey, OpinionSwap makes it easy and fun to participate in the world of decentralized opinion trading.
 
+## Deployed Links
+
+- [OpinionSwap Farcaster Frame](https://github.com/Saviour1001/opinion-swap-frame)
+- [Base Sepolia Deployed Contract](https://sepolia.basescan.org/address/0xC21A38478c3412e7253B79E6E1e9Cd3d15F5b73c)
+- [Mantle Sepolia Deployed Contract](https://explorer.sepolia.mantle.xyz/address/0xA4CCEb9e84b9682ca559AA41DB57f4BECe586dc5)
+- [Base CCIP Bridge](https://ccip.chain.link/address/0xC21A38478c3412e7253B79E6E1e9Cd3d15F5b73c)
+- [Optimism CCIP Bridge](https://ccip.chain.link/address/0xe69d08ad3d88aa3d1d4827d5774c3152619a13f1)
+
 ### 🎯 How does it work?
 
 It's simple! We create exciting proposals on various topics, from sports matches to crypto price predictions. All you need to do is choose your side, place your bets using USDC tokens, and wait for the outcome. The more accurate your predictions, the bigger your rewards! 💸
