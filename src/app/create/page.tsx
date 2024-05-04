@@ -9,10 +9,10 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import {
-  opnionTradingBaseSepolia,
-  opnionTradingBaseSepoliaABI,
-} from "@/utils/constants";
+import { networks } from "@/utils/constants";
+
+let contractAddress: `0x${string}`;
+let abi: any;
 
 const CreateCampaign: NextPage = () => {
   const [deadline, setDeadline] = useState<string>("");
@@ -20,11 +20,21 @@ const CreateCampaign: NextPage = () => {
   const [option1, setOption1] = useState<string>("");
   const [option2, setOption2] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { address } = useAccount();
-  const { data, writeContractAsync, status, error } = useWriteContract();
-  const { isSuccess, status: isValid } = useWaitForTransactionReceipt({
+  const { address, chain } = useAccount();
+  const { data, writeContractAsync, status, isError } = useWriteContract();
+  const {
+    isSuccess,
+    status: isValid,
+    isError: isTxError,
+  } = useWaitForTransactionReceipt({
     hash: data,
   });
+
+  useEffect(() => {
+    contractAddress = networks.find((network) => network.chain === chain?.name)
+      ?.contract as `0x${string}`;
+    abi = networks.find((network) => network.chain === chain?.name)?.abi;
+  }, [chain?.name]);
 
   function formatTimestamp(deadline: string): number {
     const [day, month, year] = deadline.split(/\/|-/).map(Number);
@@ -37,8 +47,8 @@ const CreateCampaign: NextPage = () => {
     setIsLoading(true);
     writeContractAsync({
       account: address,
-      address: opnionTradingBaseSepolia,
-      abi: opnionTradingBaseSepoliaABI,
+      address: contractAddress,
+      abi: abi,
       functionName: "createProposal",
       args: [description, option1, option2, formatTimestamp(deadline)],
     });
@@ -52,7 +62,7 @@ const CreateCampaign: NextPage = () => {
           borderRadius: "10px",
         },
       });
-    } else if (status === "error") {
+    } else if (isError && isTxError) {
       setIsLoading(false);
       toast.error("Something went wrong", {
         style: {
@@ -60,10 +70,15 @@ const CreateCampaign: NextPage = () => {
         },
       });
     }
-  }, [status, isSuccess, isValid]);
+  }, [status, isSuccess, isValid, isError, isTxError]);
 
   return (
-    <div className="flex-1 w-full pt-36 px-5 md:px-40 flex flex-col justify-start items-center">
+    <div className="flex-1 w-full pt-36 px-5 md:px-40 flex flex-col items-center">
+      <span className="w-full flex md:justify-end mb-4">
+        <button className="flex w-fit px-6 py-2.5 rounded-lg text-white border border-neutral-300 hover:bg-neutral-200 hover:text-black">
+          Distribute Rewards
+        </button>
+      </span>
       <div className="w-full flex flex-col justify-evenly items-center gap-8 relative">
         <div className="relative flex place-items-center before:absolute before:h-[50px] before:w-[180px] sm:before:h-[200px] md:before:w-[780px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[200px] sm:after:h-[180px] sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-lime-200 after:via-lime-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-lime-500 before:dark:opacity-10 after:dark:from-lime-400 after:dark:via-[#01fff7] after:dark:opacity-40 before:lg:h-[260px] z-[-1]">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-title">

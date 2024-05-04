@@ -1,8 +1,5 @@
 import { Trade } from "@/components";
-import {
-  opnionTradingBaseSepolia,
-  opnionTradingBaseSepoliaABI,
-} from "@/utils/constants";
+import { networks } from "@/utils/constants";
 import { createPublicClient, getContract, http } from "viem";
 import { baseSepolia } from "viem/chains";
 
@@ -13,8 +10,8 @@ const TradePage = async () => {
   });
 
   const contract = getContract({
-    address: opnionTradingBaseSepolia,
-    abi: opnionTradingBaseSepoliaABI,
+    address: networks[0].contract as `0x${string}`,
+    abi: networks[0].abi,
     client,
   });
 

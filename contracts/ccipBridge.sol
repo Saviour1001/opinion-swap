@@ -144,7 +144,6 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         uint256 _amount
     )
         external
-        onlyOwner
         onlyAllowlistedDestinationChain(_destinationChainSelector)
         validateReceiver(_receiver)
         returns (bytes32 messageId)
