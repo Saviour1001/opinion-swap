@@ -3,6 +3,8 @@ import { networks } from "@/utils/constants";
 import { Abi, createPublicClient, getContract, http } from "viem";
 import { baseSepolia, mantleSepoliaTestnet } from "viem/chains";
 
+export const fetchCache = "force-no-store";
+
 const TradePage = async ({
   searchParams,
 }: {
