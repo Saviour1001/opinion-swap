@@ -82,18 +82,6 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/discover"
-                className={`block py-2 px-3 ${
-                  pathname === "/discover"
-                    ? "text-[#e5ffad] hover:text-white"
-                    : "text-gray-300 hover:text-[#e5ffad]"
-                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-[#e5ffad] md:p-0`}
-              >
-                Discover
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/trade"
                 className={`block py-2 px-3 ${
                   pathname === "/trade"
@@ -102,6 +90,18 @@ const Navbar = () => {
                 } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-[#e5ffad] md:p-0`}
               >
                 Trade
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/onramp"
+                className={`block py-2 px-3 ${
+                  pathname === "/onramp"
+                    ? "text-[#e5ffad] hover:text-white"
+                    : "text-gray-300 hover:text-[#e5ffad]"
+                } rounded-lg hover:bg-neutral-900/40 md:hover:bg-transparent md:border-0 md:hover:text-[#e5ffad] md:p-0`}
+              >
+                Onramp
               </Link>
             </li>
           </ul>

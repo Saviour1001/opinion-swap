@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gatefi/js-sdk": "^0.18.0",
+    "@worldcoin/idkit": "^1.2.0",
     "connectkit": "^1.7.3",
     "next": "14.2.3",
     "react": "^18",
