@@ -1,7 +1,89 @@
 export const opnionTradingBaseSepolia =
-  "0x1d748f5b76a62Cf3847E6c8716d6a9cDeb560A9E";
+  "0x06a7ca596b3be8a7E75d192D572Dc43AeD375C81";
 
 export const opnionTradingBaseSepoliaABI = [
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_description",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_option1",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_option2",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "_deadline",
+        type: "uint256",
+      },
+    ],
+    name: "createProposal",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_proposalId",
+        type: "uint256",
+      },
+    ],
+    name: "distributeRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_proposalId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_winningOption",
+        type: "uint256",
+      },
+    ],
+    name: "finalizeProposal",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_proposalId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amountUSDC",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amountETH",
+        type: "uint256",
+      },
+    ],
+    name: "increaseBet",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
   {
     inputs: [
       {
@@ -111,6 +193,13 @@ export const opnionTradingBaseSepoliaABI = [
     type: "event",
   },
   {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -161,6 +250,47 @@ export const opnionTradingBaseSepoliaABI = [
     type: "event",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_proposalId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_option",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amountUSDC",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amountETH",
+        type: "uint256",
+      },
+    ],
+    name: "vote",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -196,65 +326,6 @@ export const opnionTradingBaseSepoliaABI = [
     ],
     name: "VotePlaced",
     type: "event",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "_description",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_option1",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_option2",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "_deadline",
-        type: "uint256",
-      },
-    ],
-    name: "createProposal",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_proposalId",
-        type: "uint256",
-      },
-    ],
-    name: "distributeRewards",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_proposalId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_winningOption",
-        type: "uint256",
-      },
-    ],
-    name: "finalizeProposal",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
   },
   {
     inputs: [],
@@ -380,29 +451,6 @@ export const opnionTradingBaseSepoliaABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_proposalId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_amountUSDC",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_amountETH",
-        type: "uint256",
-      },
-    ],
-    name: "increaseBet",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "owner",
     outputs: [
@@ -504,26 +552,6 @@ export const opnionTradingBaseSepoliaABI = [
   },
   {
     inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "usdcToken",
     outputs: [
       {
@@ -605,34 +633,6 @@ export const opnionTradingBaseSepoliaABI = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_proposalId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_option",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_amountUSDC",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_amountETH",
-        type: "uint256",
-      },
-    ],
-    name: "vote",
-    outputs: [],
-    stateMutability: "payable",
     type: "function",
   },
 ];

@@ -26,6 +26,13 @@ const CreateCampaign: NextPage = () => {
     hash: data,
   });
 
+  function formatTimestamp(deadline: string): number {
+    const [day, month, year] = deadline.split(/\/|-/).map(Number);
+    const date = new Date(year, month - 1, day);
+    const timestamp = date.getTime() / 1000;
+    return timestamp;
+  }
+
   const createProposal = async () => {
     setIsLoading(true);
     writeContractAsync({
@@ -33,7 +40,7 @@ const CreateCampaign: NextPage = () => {
       address: opnionTradingBaseSepolia,
       abi: opnionTradingBaseSepoliaABI,
       functionName: "createProposal",
-      args: [description, option1, option2, BigInt(deadline)],
+      args: [description, option1, option2, formatTimestamp(deadline)],
     });
   };
 
