@@ -8,11 +8,6 @@ import {CCIPReceiver} from "@chainlink/contracts-ccip/src/v0.8/ccip/applications
 import {IERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol";
 
-/**
- * THIS IS AN EXAMPLE CONTRACT THAT USES HARDCODED VALUES FOR CLARITY.
- * THIS IS AN EXAMPLE CONTRACT THAT USES UN-AUDITED CODE.
- * DO NOT USE THIS CODE IN PRODUCTION.
- */
 
 /// @title - A simple messenger contract for transferring/receiving tokens and data across chains.
 contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
@@ -23,8 +18,8 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
     error NothingToWithdraw(); // Used when trying to withdraw Ether but there's nothing to withdraw.
     error FailedToWithdrawEth(address owner, address target, uint256 value); // Used when the withdrawal of Ether fails.
     error DestinationChainNotAllowed(uint64 destinationChainSelector); // Used when the destination chain has not been allowlisted by the contract owner.
-    error SourceChainNotAllowed(uint64 sourceChainSelector); // Used when the source chain has not been allowlisted by the contract owner.
-    error SenderNotAllowed(address sender); // Used when the sender has not been allowlisted by the contract owner.
+
+
     error InvalidReceiverAddress(); // Used when the receiver address is 0.
 
     // Event emitted when a message is sent to another chain.
@@ -39,29 +34,11 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         uint256 fees // The fees paid for sending the message.
     );
 
-    // Event emitted when a message is received from another chain.
-    event MessageReceived(
-        bytes32 indexed messageId, // The unique ID of the CCIP message.
-        uint64 indexed sourceChainSelector, // The chain selector of the source chain.
-        address sender, // The address of the sender from the source chain.
-        string text, // The text that was received.
-        address token, // The token address that was transferred.
-        uint256 tokenAmount // The token amount that was transferred.
-    );
 
-    bytes32 private s_lastReceivedMessageId; // Store the last received messageId.
-    address private s_lastReceivedTokenAddress; // Store the last received token address.
-    uint256 private s_lastReceivedTokenAmount; // Store the last received amount.
-    string private s_lastReceivedText; // Store the last received text.
 
     // Mapping to keep track of allowlisted destination chains.
     mapping(uint64 => bool) public allowlistedDestinationChains;
 
-    // Mapping to keep track of allowlisted source chains.
-    mapping(uint64 => bool) public allowlistedSourceChains;
-
-    // Mapping to keep track of allowlisted senders.
-    mapping(address => bool) public allowlistedSenders;
 
     IERC20 private s_linkToken;
 
@@ -87,15 +64,7 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         _;
     }
 
-    /// @dev Modifier that checks if the chain with the given sourceChainSelector is allowlisted and if the sender is allowlisted.
-    /// @param _sourceChainSelector The selector of the destination chain.
-    /// @param _sender The address of the sender.
-    modifier onlyAllowlisted(uint64 _sourceChainSelector, address _sender) {
-        if (!allowlistedSourceChains[_sourceChainSelector])
-            revert SourceChainNotAllowed(_sourceChainSelector);
-        if (!allowlistedSenders[_sender]) revert SenderNotAllowed(_sender);
-        _;
-    }
+
 
     /// @dev Updates the allowlist status of a destination chain for transactions.
     /// @notice This function can only be called by the owner.
@@ -108,24 +77,8 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         allowlistedDestinationChains[_destinationChainSelector] = allowed;
     }
 
-    /// @dev Updates the allowlist status of a source chain
-    /// @notice This function can only be called by the owner.
-    /// @param _sourceChainSelector The selector of the source chain to be updated.
-    /// @param allowed The allowlist status to be set for the source chain.
-    function allowlistSourceChain(
-        uint64 _sourceChainSelector,
-        bool allowed
-    ) external onlyOwner {
-        allowlistedSourceChains[_sourceChainSelector] = allowed;
-    }
+    
 
-    /// @dev Updates the allowlist status of a sender for transactions.
-    /// @notice This function can only be called by the owner.
-    /// @param _sender The address of the sender to be updated.
-    /// @param allowed The allowlist status to be set for the sender.
-    function allowlistSender(address _sender, bool allowed) external onlyOwner {
-        allowlistedSenders[_sender] = allowed;
-    }
 
     /// @notice Sends data and transfer tokens to receiver on the destination chain.
     /// @notice Pay for fees in LINK.
@@ -196,124 +149,6 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {
         return messageId;
     }
 
-    /// @notice Sends data and transfer tokens to receiver on the destination chain.
-    /// @notice Pay for fees in native gas.
-    /// @dev Assumes your contract has sufficient native gas like ETH on Ethereum or MATIC on Polygon.
-    /// @param _destinationChainSelector The identifier (aka selector) for the destination blockchain.
-    /// @param _receiver The address of the recipient on the destination blockchain.
-    /// @param _text The string data to be sent.
-    /// @param _token token address.
-    /// @param _amount token amount.
-    /// @return messageId The ID of the CCIP message that was sent.
-    function sendMessagePayNative(
-        uint64 _destinationChainSelector,
-        address _receiver,
-        string calldata _text,
-        address _token,
-        uint256 _amount
-    )
-        external
-        onlyOwner
-        onlyAllowlistedDestinationChain(_destinationChainSelector)
-        validateReceiver(_receiver)
-        returns (bytes32 messageId)
-    {
-        // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
-        // address(0) means fees are paid in native gas
-        Client.EVM2AnyMessage memory evm2AnyMessage = _buildCCIPMessage(
-            _receiver,
-            _text,
-            _token,
-            _amount,
-            address(0)
-        );
-
-        // Initialize a router client instance to interact with cross-chain router
-        IRouterClient router = IRouterClient(this.getRouter());
-
-        // Get the fee required to send the CCIP message
-        uint256 fees = router.getFee(_destinationChainSelector, evm2AnyMessage);
-
-        if (fees > address(this).balance)
-            revert NotEnoughBalance(address(this).balance, fees);
-
-        // approve the Router to spend tokens on contract's behalf. It will spend the amount of the given token
-        IERC20(_token).approve(address(router), _amount);
-
-        // Send the message through the router and store the returned message ID
-        messageId = router.ccipSend{value: fees}(
-            _destinationChainSelector,
-            evm2AnyMessage
-        );
-
-        // Emit an event with message details
-        emit MessageSent(
-            messageId,
-            _destinationChainSelector,
-            _receiver,
-            _text,
-            _token,
-            _amount,
-            address(0),
-            fees
-        );
-
-        // Return the message ID
-        return messageId;
-    }
-
-    /**
-     * @notice Returns the details of the last CCIP received message.
-     * @dev This function retrieves the ID, text, token address, and token amount of the last received CCIP message.
-     * @return messageId The ID of the last received CCIP message.
-     * @return text The text of the last received CCIP message.
-     * @return tokenAddress The address of the token in the last CCIP received message.
-     * @return tokenAmount The amount of the token in the last CCIP received message.
-     */
-    function getLastReceivedMessageDetails()
-        public
-        view
-        returns (
-            bytes32 messageId,
-            string memory text,
-            address tokenAddress,
-            uint256 tokenAmount
-        )
-    {
-        return (
-            s_lastReceivedMessageId,
-            s_lastReceivedText,
-            s_lastReceivedTokenAddress,
-            s_lastReceivedTokenAmount
-        );
-    }
-
-    /// handle a received message
-    function _ccipReceive(
-        Client.Any2EVMMessage memory any2EvmMessage
-    )
-        internal
-        override
-        onlyAllowlisted(
-            any2EvmMessage.sourceChainSelector,
-            abi.decode(any2EvmMessage.sender, (address))
-        ) // Make sure source chain and sender are allowlisted
-    {
-        s_lastReceivedMessageId = any2EvmMessage.messageId; // fetch the messageId
-        s_lastReceivedText = abi.decode(any2EvmMessage.data, (string)); // abi-decoding of the sent text
-        // Expect one token to be transferred at once, but you can transfer several tokens.
-        s_lastReceivedTokenAddress = any2EvmMessage.destTokenAmounts[0].token;
-        s_lastReceivedTokenAmount = any2EvmMessage.destTokenAmounts[0].amount;
-
-        emit MessageReceived(
-            any2EvmMessage.messageId,
-            any2EvmMessage.sourceChainSelector, // fetch the source chain identifier (aka selector)
-            abi.decode(any2EvmMessage.sender, (address)), // abi-decoding of the sender address,
-            abi.decode(any2EvmMessage.data, (string)),
-            any2EvmMessage.destTokenAmounts[0].token,
-            any2EvmMessage.destTokenAmounts[0].amount
-        );
-    }
 
     /// @notice Construct a CCIP message.
     /// @dev This function will create an EVM2AnyMessage struct with all the necessary information for programmable tokens transfer.
