@@ -17,7 +17,7 @@ With over 200k monthly active users on Farcaster, we've found the perfect distri
 - [OpinionSwap Farcaster Frame](https://github.com/Saviour1001/opinion-swap-frame)
 - [Base Sepolia Deployed Contract](https://sepolia.basescan.org/address/0xC21A38478c3412e7253B79E6E1e9Cd3d15F5b73c)
 - [Mantle Sepolia Deployed Contract](https://explorer.sepolia.mantle.xyz/address/0xA4CCEb9e84b9682ca559AA41DB57f4BECe586dc5)
-- [Base CCIP Bridge](https://ccip.chain.link/address/0xC21A38478c3412e7253B79E6E1e9Cd3d15F5b73c)
+- [Base CCIP Bridge](https://ccip.chain.link/address/0x5EB2E851499Be5Bda359f3316Da43fE4099a1990)
 - [Optimism CCIP Bridge](https://ccip.chain.link/address/0xe69d08ad3d88aa3d1d4827d5774c3152619a13f1)
 
 ### 🎯 How does it work?
